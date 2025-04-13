@@ -1194,6 +1194,7 @@ async def debt_menu_button_handler(update: Update, context: CallbackContext):
         await query.message.edit_text(text, parse_mode="Markdown", reply_markup=generate_back_button())
 
     elif query.data == "debt_back":
+        print("Кнопка 'Назад' нажата")
         await debt(update, context)
 
 async def ask_debt_name(update: Update, context: CallbackContext):
@@ -1383,11 +1384,20 @@ if __name__ == "__main__":
     )
     app.add_handler(debt_conv_handler)
 
+
+    async def send_example_menu(update: Update, context: CallbackContext):
+        keyboard = generate_back_button()
+        await update.message.reply_text(
+            text="Пример текста с кнопкой назад:",
+            reply_markup=keyboard
+        )
+
+
     # Обработчики кнопок по категориям
     app.add_handler(CallbackQueryHandler(main_menu_button_handler, pattern="^(add|history|stats|budget|goal|chart|convert|export|sync|reminder|report|debt|help)$"))
     app.add_handler(CallbackQueryHandler(simple_menu_button_handler, pattern="^(add_menu|convert|help)$"))
-    app.add_handler(CallbackQueryHandler(debt_menu_button_handler, pattern="^(view_debts|debt_history|close_debt|remind_debt|help_debt|main_menu|add_debt)$"))
-
+    app.add_handler(CallbackQueryHandler(debt_menu_button_handler, pattern="^(view_debts|debt_history|close_debt|remind_debt|help_debt|main_menu|add_debt|debt_back)$"))
+    app.add_handler(CommandHandler("test", send_example_menu))
     # Напоминание о долгах
     job_queue = app.job_queue
     job_queue.run_daily(lambda context: context.job_queue.run_once(set_reminder, 0), time=time(9, 0))
