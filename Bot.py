@@ -5,6 +5,7 @@ import random
 import logging
 import asyncio
 import sqlite3
+import sys
 from collections import defaultdict
 from datetime import datetime, timedelta, time
 
@@ -37,11 +38,16 @@ logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(message)s",
     level=logging.INFO,  # Уровень логирования (INFO - выводить основные события)
     handlers=[
-        logging.FileHandler("bot.log"),  # Лог в файл bot.log
-        logging.StreamHandler()  # Лог в консоль
+        logging.FileHandler("bot.log", encoding="utf-8"),  # Лог в файл bot.log с указанием кодировки
+        logging.StreamHandler(sys.stdout)  # Лог в консоль с кодировкой utf-8
     ]
 )
-logger = logging.getLogger(__name__)  # Создаём логгер
+# Принудительно изменить кодировку sys.stdout для поддержания Unicode в консоли (если это Windows)
+sys.stdout.reconfigure(encoding='utf-8')
+sys.stderr.reconfigure(encoding='utf-8')
+
+# Создаём логгер
+logger = logging.getLogger(__name__)
 
 # Инициализация базы данных
 def init_db():
@@ -132,6 +138,113 @@ async def start(update: Update, context: CallbackContext):
 
 # Состояния диалога
 AMOUNT, CATEGORY, TYPE = range(3)
+WAITING_FOR_AMOUNT = 1
+WAITING_FOR_NAME = ''
+
+def generate_back_main_menu_button():
+    keyboard = [[InlineKeyboardButton("🔙 Главное меню", callback_data="main_menu")]]
+    return InlineKeyboardMarkup(keyboard)
+
+async def handle_name_input(update: Update, context: CallbackContext) -> str:
+    user_input = update.message.text  # Получаем текст, который ввёл пользователь
+
+    try:
+        # Преобразуем ввод в строку
+        name = str(user_input)
+
+        # Сохраняем имя во временном контексте
+        context.user_data['name'] = name
+
+        await add_transaction_final_step(update, context)
+
+        return ConversationHandler.END
+
+    except ValueError:
+        # Обработка неправильного ввода
+        await update.message.reply_text(
+            "❌ Пожалуйста, введите корректное название. Попробуйте ещё раз:"
+        )
+        return WAITING_FOR_NAME  # Остаться в текущем состоянии
+
+
+async def handle_amount_input(update: Update, context: CallbackContext) -> int:
+    user_input = update.message.text  # Получаем текст, который ввёл пользователь
+
+    try:
+        # Преобразуем ввод в число
+        amount = int(user_input)
+
+        print(f"amount {amount}")
+
+        # Сохраняем сумму во временном контексте
+        context.user_data['amount'] = amount
+
+        # Отправляем подтверждение пользователю
+        await update.message.reply_text(
+            f"💾 Сумма `{amount}` сохранена!\n"
+            "Введите название транзакции: ",
+            parse_mode="Markdown",
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("🔙 Назад", callback_data="add_menu")]
+            ])
+        )
+        return WAITING_FOR_NAME
+
+    except ValueError:
+        # Обработка неправильного ввода
+        await update.message.reply_text(
+            "❌ Пожалуйста, введите корректное число. Попробуйте ещё раз:"
+        )
+        return WAITING_FOR_AMOUNT  # Остаться в текущем состоянии
+
+
+async def add_transaction_final_step(update: Update, context: CallbackContext):
+    user_id = update.effective_user.id
+    amount = context.user_data.get('amount')
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    category = context.user_data.get('name')
+
+    print(f"category {category}")
+    print(f"amount {amount}")
+
+    transaction_type = "расход"
+    if amount > 0:
+        transaction_type = "доход"
+
+    conn = sqlite3.connect("finance_bot.db")
+    cursor = conn.cursor()
+    cursor.execute("""
+            INSERT INTO transactions (user_id, amount, category, type, timestamp)
+            VALUES (?, ?, ?, ?, ?)
+        """, (user_id, amount, category, transaction_type, timestamp))
+
+    # Проверяем, существует ли запись в таблице budget для user_id
+    cursor.execute("SELECT amount FROM budget WHERE user_id = ?", (user_id,))
+    result = cursor.fetchone()
+
+    # Если пользователь существует, обновить запись
+    if result:
+        if transaction_type == "доход":
+            cursor.execute("""
+                    UPDATE budget SET amount = amount + ? WHERE user_id = ? AND category = ?
+                """, (amount, user_id, category))
+    else:
+        # Если пользователь отсутствует - создать новую запись
+        initial_amount = amount if transaction_type == "доход" else -abs(amount)
+        cursor.execute("""
+                INSERT INTO budget (user_id, amount, category) VALUES (?, ?)
+            """, (user_id, initial_amount, category))
+
+    conn.commit()
+    conn.close()
+
+    # Подтверждение успешного добавления + главное меню
+    await update.message.reply_text(
+        f"✅ Транзакция добавлена:\n💰 {amount} | 📂 {category} | 🔹 {transaction_type}",
+        reply_markup=main_menu_keyboard()
+    )
+
 
 async def simple_menu_button_handler(update: Update, context: CallbackContext):
     query = update.callback_query
@@ -152,15 +265,27 @@ async def simple_menu_button_handler(update: Update, context: CallbackContext):
         )
         await query.edit_message_text(help_text, parse_mode="Markdown", reply_markup=main_menu_keyboard())
 
+    #elif data == "add_menu":
+    #    await query.edit_message_text(
+    #        "✍️ *Добавление транзакции:*\n\n"
+    #        "Введите команду в формате:\n"
+    #        "`/add сумма категория`\n\n"
+    #        "*Пример:* `/add 500 еда`",
+    #        parse_mode="Markdown",
+    #        reply_markup=main_menu_keyboard()
+    #    )
+
     elif data == "add_menu":
+        query = update.callback_query
+        await query.answer()
         await query.edit_message_text(
-            "✍️ *Добавление транзакции:*\n\n"
-            "Введите команду в формате:\n"
-            "`/add сумма категория`\n\n"
-            "*Пример:* `/add 500 еда`",
+            "✍️ *Введите сумму:*\n\n"
+            "*Пример:* `500` для сохранения дохода"
+            " или `-500` если хотите сохранить расход",
             parse_mode="Markdown",
-            reply_markup=main_menu_keyboard()
+            reply_markup=generate_back_main_menu_button()
         )
+        return WAITING_FOR_AMOUNT
 
     elif data == "history":
         # Предположим, ты хочешь показывать placeholder здесь
@@ -923,10 +1048,25 @@ async def budget(update: Update, context: CallbackContext):
     await log_command_usage(update, context)
 
     user_id = update.message.from_user.id if update.message else update.callback_query.from_user.id
+
+    # Закрываем "часики", если это callback_query
     if update.callback_query:
-        await update.callback_query.answer()  # Закрываем "часики"
+        await update.callback_query.answer()
+
+    # Сбрасываем предыдущее сообщение (если оно существует)
+    if context.user_data.get('budget_message_id'):
+        try:
+            await context.bot.delete_message(chat_id=update.effective_chat.id,
+                                             message_id=context.user_data['budget_message_id'])
+        except Exception:
+            pass  # Игнорируем, если сообщение уже удалено
 
     args = context.args if update.message else []
+
+    # Создаём InlineKeyboardMarkup с кнопкой Назад
+    back_button_markup = InlineKeyboardMarkup([
+        [InlineKeyboardButton("🔙 Назад", callback_data="main_menu")]
+    ])
 
     try:
         conn = sqlite3.connect("finance_bot.db")
@@ -938,7 +1078,12 @@ async def budget(update: Update, context: CallbackContext):
             try:
                 amount = float(args[-1])
             except ValueError:
-                await context.bot.send_message(chat_id=user_id, text="❌ Ошибка! Введите корректное число для суммы бюджета.")
+                msg = await context.bot.send_message(
+                    chat_id=user_id,
+                    text="❌ Ошибка! Введите корректное число для суммы бюджета.",
+                    reply_markup=back_button_markup
+                )
+                context.user_data['budget_message_id'] = msg.message_id
                 return
 
             cursor.execute("""
@@ -948,7 +1093,13 @@ async def budget(update: Update, context: CallbackContext):
             """, (user_id, category, amount, amount))
             conn.commit()
 
-            await context.bot.send_message(chat_id=user_id, text=f"✅ Бюджет для категории '*{category}*' установлен: *{amount} грн*", parse_mode="Markdown")
+            msg = await context.bot.send_message(
+                chat_id=user_id,
+                text=f"✅ Бюджет для категории '*{category}*' установлен: *{amount} грн*",
+                parse_mode="Markdown",
+                reply_markup=back_button_markup
+            )
+            context.user_data['budget_message_id'] = msg.message_id
 
         else:
             # Просмотр бюджета
@@ -956,20 +1107,44 @@ async def budget(update: Update, context: CallbackContext):
             budgets = cursor.fetchall()
 
             if not budgets:
-                await context.bot.send_message(chat_id=user_id, text="💡 У вас пока нет установленного бюджета.")
+                msg = await context.bot.send_message(
+                    chat_id=user_id,
+                    text="💡 У вас пока нет установленного бюджета.",
+                    reply_markup=back_button_markup
+                )
+                context.user_data['budget_message_id'] = msg.message_id
                 return
 
             message_lines = ["📊 *Ваши бюджеты:*"]
             for category, amount in budgets:
                 message_lines.append(f"💰 *{category}*: `{amount} грн`")
 
-            await context.bot.send_message(chat_id=user_id, text="\n".join(message_lines), parse_mode="Markdown")
+            msg = await context.bot.send_message(
+                chat_id=user_id,
+                text="\n".join(message_lines),
+                parse_mode="Markdown",
+                reply_markup=back_button_markup
+            )
+            context.user_data['budget_message_id'] = msg.message_id
 
     finally:
         conn.close()
 
 
-        # Функция советов по финансам
+async def close_budget_if_active(update: Update, context: CallbackContext):
+    # Проверяем, если активное сообщение бюджета существует
+    print("test 1")
+    if context.user_data.get('budget_message_id'):
+        try:
+            await context.bot.delete_message(chat_id=update.effective_chat.id,
+                                             message_id=context.user_data['budget_message_id'])
+        except Exception:
+            pass  # Игнорируем ошибки, если сообщение уже удалено
+
+        # Сбрасываем состояние
+        context.user_data['budget_message_id'] = None
+
+
 async def advice(update: Update, context: CallbackContext):
     await log_command_usage(update, context)
 
@@ -1345,25 +1520,25 @@ if __name__ == "__main__":
     app = Application.builder().token(TOKEN).build()
 
     # Обработчики команд
-    app.add_handler(CommandHandler("start", start))
-    app.add_handler(CommandHandler("add", add_transaction))
-    app.add_handler(CommandHandler("history", history))
-    app.add_handler(CommandHandler("debt", debt))  # логирование внутри самой функции debt
-    app.add_handler(CommandHandler("stats", stats))
-    app.add_handler(CommandHandler("goal", goal))
-    app.add_handler(CommandHandler("undo", undo))
-    app.add_handler(CommandHandler("export", export_data))
-    app.add_handler(CommandHandler("chart", show_chart))
-    app.add_handler(CommandHandler("help", help_command))
-    app.add_handler(CommandHandler("reminder", set_reminder))
-    app.add_handler(CommandHandler("goaltrack", track_goals))
-    app.add_handler(CommandHandler("transactions", filter_transactions))
-    app.add_handler(CommandHandler("budget", budget))
-    app.add_handler(CommandHandler("advice", advice))
-    app.add_handler(CommandHandler("convert", convert))
-    app.add_handler(CommandHandler("sync", sync))
-    app.add_handler(CommandHandler("adddebt", adddebt))
-    app.add_handler(CallbackQueryHandler(start, pattern="^main_menu$"))
+    app.add_handler(CommandHandler("start", start), group=0)
+    app.add_handler(CommandHandler("add", add_transaction), group=0)
+    app.add_handler(CommandHandler("history", history), group=0)
+    app.add_handler(CommandHandler("debt", debt), group=0)  # логирование внутри самой функции debt
+    app.add_handler(CommandHandler("stats", stats), group=0)
+    app.add_handler(CommandHandler("goal", goal), group=0)
+    app.add_handler(CommandHandler("undo", undo), group=0)
+    app.add_handler(CommandHandler("export", export_data), group=0)
+    app.add_handler(CommandHandler("chart", show_chart), group=0)
+    app.add_handler(CommandHandler("help", help_command), group=0)
+    app.add_handler(CommandHandler("reminder", set_reminder), group=0)
+    app.add_handler(CommandHandler("goaltrack", track_goals), group=0)
+    app.add_handler(CommandHandler("transactions", filter_transactions), group=0)
+    app.add_handler(CommandHandler("budget", budget), group=0)
+    app.add_handler(CommandHandler("advice", advice), group=0)
+    app.add_handler(CommandHandler("convert", convert), group=0)
+    app.add_handler(CommandHandler("sync", sync), group=0)
+    app.add_handler(CommandHandler("adddebt", adddebt), group=0)
+    app.add_handler(CallbackQueryHandler(start, pattern="^main_menu$"), group=0)
 
 
     # ConversationHandler для долгов
@@ -1382,25 +1557,35 @@ if __name__ == "__main__":
         },
         fallbacks=[CommandHandler("cancel", cancel_add_debt)],
     )
-    app.add_handler(debt_conv_handler)
+    app.add_handler(debt_conv_handler, group=0)
 
-
-    async def send_example_menu(update: Update, context: CallbackContext):
-        keyboard = generate_back_button()
-        await update.message.reply_text(
-            text="Пример текста с кнопкой назад:",
-            reply_markup=keyboard
-        )
+    conv_handler = ConversationHandler(
+        entry_points=[CallbackQueryHandler(simple_menu_button_handler, pattern="^(add_menu|convert|help)$")],
+        states={
+            WAITING_FOR_AMOUNT: [
+                MessageHandler(filters.TEXT & ~filters.COMMAND, handle_amount_input),
+                CallbackQueryHandler(debt_menu_button_handler)
+            ],
+            WAITING_FOR_NAME: [
+                MessageHandler(filters.TEXT & ~filters.COMMAND, handle_name_input),
+                CallbackQueryHandler(debt_menu_button_handler)
+            ],
+        },
+        fallbacks=[
+            CallbackQueryHandler(start, pattern="^main_menu$"),
+        ]
+    )
+    app.add_handler(conv_handler, group=0)
 
 
     # Обработчики кнопок по категориям
-    app.add_handler(CallbackQueryHandler(main_menu_button_handler, pattern="^(add|history|stats|budget|goal|chart|convert|export|sync|reminder|report|debt|help)$"))
-    app.add_handler(CallbackQueryHandler(simple_menu_button_handler, pattern="^(add_menu|convert|help)$"))
-    app.add_handler(CallbackQueryHandler(debt_menu_button_handler, pattern="^(view_debts|debt_history|close_debt|remind_debt|help_debt|main_menu|add_debt|debt_back)$"))
-    app.add_handler(CommandHandler("test", send_example_menu))
-    # Напоминание о долгах
+    app.add_handler(CallbackQueryHandler(main_menu_button_handler, pattern="^(add|history|stats|budget|goal|chart|convert|export|sync|reminder|report|debt|help)$"), group=0)
+    #app.add_handler(CallbackQueryHandler(simple_menu_button_handler, pattern="^(add_menu|convert|help)$"))
+    app.add_handler(CallbackQueryHandler(debt_menu_button_handler, pattern="^(view_debts|debt_history|close_debt|remind_debt|help_debt|main_menu|add_debt|debt_back)$"), group=0)
     job_queue = app.job_queue
     job_queue.run_daily(lambda context: context.job_queue.run_once(set_reminder, 0), time=time(9, 0))
+
+    app.add_handler(MessageHandler(filters.ALL, close_budget_if_active), group=1)
 
     # Обработка ошибок
     async def error_handler(update: object, context: CallbackContext):
