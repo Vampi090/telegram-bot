@@ -96,17 +96,72 @@ def init_db():
 
 def main_menu_keyboard():
     keyboard = [
-        [InlineKeyboardButton("➕ Добавить", callback_data="add_menu"),
-         InlineKeyboardButton("📜 История", callback_data="history")],
-        [InlineKeyboardButton("📊 Статистика", callback_data="stats"),
-         InlineKeyboardButton("🎯 Цели", callback_data="goal")],
-        [InlineKeyboardButton("💸 Бюджет", callback_data="budget"),
-         InlineKeyboardButton("🔁 Конвертация", callback_data="convert")],
-        [InlineKeyboardButton("💰 Долги", callback_data="debt")],
-        [InlineKeyboardButton("❓ Помощь", callback_data="help")],
-        [InlineKeyboardButton("🔙 Главное меню", callback_data="main_menu")]  # ← исправлено
+        [InlineKeyboardButton("📥 Управление транзакциями", callback_data='menu_transactions')],
+        [InlineKeyboardButton("📊 Аналитика и отчёты", callback_data='menu_analytics')],
+        [InlineKeyboardButton("🎯 Цели и бюджет", callback_data='menu_goals_budget')],
+        [InlineKeyboardButton("💼 Финансовые инструменты", callback_data='menu_tools')],
+        [InlineKeyboardButton("🔄 Синхронизация и экспорт", callback_data='menu_sync_export')],
+        [InlineKeyboardButton("🤝 Учёт долгов", callback_data='menu_debt')],
+        [InlineKeyboardButton("❓ Помощь", callback_data='menu_help')],
     ]
     return InlineKeyboardMarkup(keyboard)
+
+
+def transactions_menu():
+    keyboard = [
+        [InlineKeyboardButton("➕ Добавить транзакцию", callback_data='add_transaction')],
+        [InlineKeyboardButton("📜 История", callback_data='view_history')],
+        [InlineKeyboardButton("↩️ Отменить транзакцию", callback_data='undo_transaction')],
+        [InlineKeyboardButton("⬅️ Назад", callback_data='main_menu')],
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
+
+def analytics_menu():
+    keyboard = [
+        [InlineKeyboardButton("📈 Статистика", callback_data='view_stats')],
+        [InlineKeyboardButton("📊 Графики", callback_data='view_charts')],
+        [InlineKeyboardButton("📅 Сводка", callback_data='view_report')],
+        [InlineKeyboardButton("⬅️ Назад", callback_data='main_menu')],
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
+
+def goals_budget_menu():
+    keyboard = [
+        [InlineKeyboardButton("🎯 Цели", callback_data='manage_goals')],
+        [InlineKeyboardButton("💰 Бюджет", callback_data='manage_budget')],
+        [InlineKeyboardButton("⏰ Напоминания", callback_data='manage_reminders')],
+        [InlineKeyboardButton("⬅️ Назад", callback_data='main_menu')],
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
+
+def tools_menu():
+    keyboard = [
+        [InlineKeyboardButton("💱 Конвертация валют", callback_data='convert_currency')],
+        [InlineKeyboardButton("⬅️ Назад", callback_data='main_menu')],
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
+
+def sync_export_menu():
+    keyboard = [
+        [InlineKeyboardButton("🔄 Синхронизация", callback_data='sync_data')],
+        [InlineKeyboardButton("📁 Экспорт", callback_data='export_data')],
+        [InlineKeyboardButton("⬅️ Назад", callback_data='main_menu')],
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
+
+def help_menu():
+    keyboard = [
+        [InlineKeyboardButton("📌 Команды", callback_data='help_commands')],
+        [InlineKeyboardButton("📖 Мини-гайд", callback_data='mini_guide')],
+        [InlineKeyboardButton("⬅️ Назад", callback_data='main_menu')],
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
 
 
 # Функция старта с обновлённым меню
@@ -1485,32 +1540,58 @@ async def main_menu_button_handler(update: Update, context: CallbackContext):
     query = update.callback_query
     await query.answer()
 
-    if query.data == 'add':
+    data = query.data
+
+    # Управление транзакциями
+    if data == 'add':
         await add_transaction(update, context)
-    elif query.data == 'history':
+    elif data == 'history':
         await history(update, context)
-    elif query.data == 'stats':
+    elif data == 'stats':
         await stats(update, context)
-    elif query.data == 'budget':
+
+    # Цели и бюджет
+    elif data == 'budget':
         await budget(update, context)
-    elif query.data == 'goal':
+    elif data == 'goal':
         await goal(update, context)
-    elif query.data == 'chart':
+
+    # Графики и статистика
+    elif data == 'chart':
         await show_chart(update, context)
-    elif query.data == 'convert':
+    elif data == 'convert':
         await convert(update, context)
-    elif query.data == 'export':
+    elif data == 'export':
         await export_data(update, context)
-    elif query.data == 'sync':
+
+    # Синхронизация и экспорт
+    elif data == 'sync':
         await sync(update, context)
-    elif query.data == 'reminder':
+
+    # Напоминания
+    elif data == 'reminder':
         await set_reminder(update, context)
-    elif query.data == 'report':
+
+    # Сводка
+    elif data == 'report':
         await track_goals(update, context)
-    elif query.data == 'debt':
+
+    # Обсуждение долгов
+    elif data == 'debt':
         await debt(update, context)
-    elif query.data == 'help':
+
+    # Помощь
+    elif data == 'help':
         await help_command(update, context)
+
+    # Возврат в главное меню
+    elif data == 'main_menu':
+        await query.edit_message_text("🏠 Головне меню:", reply_markup=main_menu_keyboard())
+
+    # Обработка ошибок
+    else:
+        await query.edit_message_text("❌ Невідома команда.", reply_markup=main_menu_keyboard())
+
 
 
 # Запуск бота
