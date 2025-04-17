@@ -3534,3 +3534,188 @@
 2025-04-16 14:06:29,958 - INFO - Application is stopping. This might take a moment.
 2025-04-16 14:06:29,959 - INFO - Scheduler has been shut down
 2025-04-16 14:06:29,971 - INFO - Application.stop() complete
+2025-04-17 10:23:23,613 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-04-17 10:23:23,900 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getMe "HTTP/1.1 200 OK"
+2025-04-17 10:23:23,947 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/deleteWebhook "HTTP/1.1 200 OK"
+2025-04-17 10:23:23,948 - INFO - Added job "<lambda>" to job store "default"
+2025-04-17 10:23:23,949 - INFO - Scheduler started
+2025-04-17 10:23:23,949 - INFO - Application started
+2025-04-17 10:23:27,268 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:23:27,274 - INFO - 📥 ///// ///// (@Vampi090, ID: 661553358) вызвал команду: /start в 2025-04-17 07:23:26
+2025-04-17 10:23:27,415 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/sendMessage "HTTP/1.1 200 OK"
+2025-04-17 10:23:28,704 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:23:29,565 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:23:31,134 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:23:31,746 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:23:32,203 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:23:35,763 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:23:35,769 - INFO - 📥 ///// ///// (@Vampi090, ID: 661553358) вызвал команду: debt в 2025-04-17 10:23:35
+2025-04-17 10:23:35,918 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/answerCallbackQuery "HTTP/1.1 200 OK"
+2025-04-17 10:23:35,981 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/editMessageText "HTTP/1.1 200 OK"
+2025-04-17 10:23:41,219 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:23:41,225 - INFO - 📥 ///// ///// (@Vampi090, ID: 661553358) вызвал команду: main_menu в 2025-04-17 10:23:41
+2025-04-17 10:23:41,397 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/answerCallbackQuery "HTTP/1.1 200 OK"
+2025-04-17 10:23:41,505 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/editMessageText "HTTP/1.1 200 OK"
+2025-04-17 10:23:43,870 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:23:52,678 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:24:02,725 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:24:11,139 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:24:18,212 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:24:20,546 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:24:20,565 - INFO - 📥 ///// ///// (@Vampi090, ID: 661553358) вызвал команду: debt в 2025-04-17 10:24:20
+2025-04-17 10:24:20,727 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/answerCallbackQuery "HTTP/1.1 200 OK"
+2025-04-17 10:24:20,792 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/editMessageText "HTTP/1.1 200 OK"
+2025-04-17 10:24:24,173 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:24:24,181 - INFO - 📥 ///// ///// (@Vampi090, ID: 661553358) вызвал команду: main_menu в 2025-04-17 10:24:24
+2025-04-17 10:24:24,322 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/answerCallbackQuery "HTTP/1.1 200 OK"
+2025-04-17 10:24:24,510 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/editMessageText "HTTP/1.1 200 OK"
+2025-04-17 10:24:25,445 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:24:25,452 - INFO - 📥 ///// ///// (@Vampi090, ID: 661553358) вызвал команду: debt в 2025-04-17 10:24:25
+2025-04-17 10:24:25,508 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/answerCallbackQuery "HTTP/1.1 200 OK"
+2025-04-17 10:24:25,594 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/editMessageText "HTTP/1.1 200 OK"
+2025-04-17 10:24:26,500 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:24:26,507 - INFO - 📥 ///// ///// (@Vampi090, ID: 661553358) вызвал команду: main_menu в 2025-04-17 10:24:26
+2025-04-17 10:24:26,609 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/answerCallbackQuery "HTTP/1.1 200 OK"
+2025-04-17 10:24:26,727 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/editMessageText "HTTP/1.1 200 OK"
+2025-04-17 10:24:27,923 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:24:27,930 - INFO - 📥 ///// ///// (@Vampi090, ID: 661553358) вызвал команду: debt в 2025-04-17 10:24:27
+2025-04-17 10:24:27,989 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/answerCallbackQuery "HTTP/1.1 200 OK"
+2025-04-17 10:24:28,059 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/editMessageText "HTTP/1.1 200 OK"
+2025-04-17 10:24:29,856 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:24:29,864 - INFO - 📥 ///// ///// (@Vampi090, ID: 661553358) вызвал команду: main_menu в 2025-04-17 10:24:29
+2025-04-17 10:24:29,938 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/answerCallbackQuery "HTTP/1.1 200 OK"
+2025-04-17 10:24:30,025 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/editMessageText "HTTP/1.1 200 OK"
+2025-04-17 10:24:33,384 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:24:34,293 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:24:44,340 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:24:54,388 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:25:04,435 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:25:14,481 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:25:24,527 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:25:34,584 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:25:44,632 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:25:54,677 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:26:04,723 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:26:14,770 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:26:24,816 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:26:34,863 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:26:44,909 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:26:54,955 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:27:05,001 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:27:15,048 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:27:25,094 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:27:33,142 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:27:33,142 - INFO - Application is stopping. This might take a moment.
+2025-04-17 10:27:33,143 - INFO - Scheduler has been shut down
+2025-04-17 10:27:33,164 - INFO - Application.stop() complete
+2025-04-17 10:31:46,763 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-04-17 10:31:47,010 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getMe "HTTP/1.1 200 OK"
+2025-04-17 10:31:47,057 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/deleteWebhook "HTTP/1.1 200 OK"
+2025-04-17 10:31:47,058 - INFO - Added job "<lambda>" to job store "default"
+2025-04-17 10:31:47,058 - INFO - Scheduler started
+2025-04-17 10:31:47,059 - INFO - Application started
+2025-04-17 10:31:49,944 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:31:49,950 - INFO - 📥 ///// ///// (@Vampi090, ID: 661553358) вызвал команду: /start в 2025-04-17 07:31:49
+2025-04-17 10:31:50,020 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/sendMessage "HTTP/1.1 200 OK"
+2025-04-17 10:31:51,011 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:31:53,350 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:31:54,151 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:31:54,682 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:31:55,202 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:31:56,258 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:32:06,305 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:32:16,355 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:32:26,402 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:32:36,449 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:32:46,496 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:32:56,542 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:33:06,594 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:33:16,641 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:33:26,687 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:33:36,734 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:33:46,782 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:33:56,828 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:34:06,878 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:34:16,925 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:34:26,971 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:34:37,017 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:34:47,063 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:34:57,114 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:35:07,173 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:35:17,219 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:35:27,266 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:35:32,487 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:35:32,488 - INFO - Application is stopping. This might take a moment.
+2025-04-17 10:35:32,488 - INFO - Scheduler has been shut down
+2025-04-17 10:35:32,513 - INFO - Application.stop() complete
+2025-04-17 10:35:35,581 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-04-17 10:35:35,815 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getMe "HTTP/1.1 200 OK"
+2025-04-17 10:35:35,864 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/deleteWebhook "HTTP/1.1 200 OK"
+2025-04-17 10:35:35,865 - INFO - Added job "<lambda>" to job store "default"
+2025-04-17 10:35:35,866 - INFO - Scheduler started
+2025-04-17 10:35:35,866 - INFO - Application started
+2025-04-17 10:35:46,004 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:35:46,170 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:35:46,175 - INFO - 📥 ///// ///// (@Vampi090, ID: 661553358) вызвал команду: /start в 2025-04-17 07:35:45
+2025-04-17 10:35:46,439 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/sendMessage "HTTP/1.1 200 OK"
+2025-04-17 10:35:47,431 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:35:47,437 - INFO - 📥 ///// ///// (@Vampi090, ID: 661553358) вызвал команду: transactions в 2025-04-17 10:35:47
+2025-04-17 10:35:47,523 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/answerCallbackQuery "HTTP/1.1 200 OK"
+2025-04-17 10:35:47,620 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/editMessageText "HTTP/1.1 200 OK"
+2025-04-17 10:35:49,119 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:35:49,125 - INFO - 📥 ///// ///// (@Vampi090, ID: 661553358) вызвал команду: main_menu в 2025-04-17 10:35:49
+2025-04-17 10:35:49,214 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/answerCallbackQuery "HTTP/1.1 200 OK"
+2025-04-17 10:35:49,305 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/editMessageText "HTTP/1.1 200 OK"
+2025-04-17 10:35:50,231 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:35:50,236 - INFO - 📥 ///// ///// (@Vampi090, ID: 661553358) вызвал команду: analytics в 2025-04-17 10:35:50
+2025-04-17 10:35:50,374 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/answerCallbackQuery "HTTP/1.1 200 OK"
+2025-04-17 10:35:50,512 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/editMessageText "HTTP/1.1 200 OK"
+2025-04-17 10:35:51,618 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:35:51,625 - INFO - 📥 ///// ///// (@Vampi090, ID: 661553358) вызвал команду: main_menu в 2025-04-17 10:35:51
+2025-04-17 10:35:51,695 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/answerCallbackQuery "HTTP/1.1 200 OK"
+2025-04-17 10:35:51,766 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/editMessageText "HTTP/1.1 200 OK"
+2025-04-17 10:35:53,513 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:35:53,524 - INFO - 📥 ///// ///// (@Vampi090, ID: 661553358) вызвал команду: tools в 2025-04-17 10:35:53
+2025-04-17 10:35:53,682 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/answerCallbackQuery "HTTP/1.1 200 OK"
+2025-04-17 10:35:53,903 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/editMessageText "HTTP/1.1 200 OK"
+2025-04-17 10:35:55,167 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:35:55,226 - INFO - 📥 ///// ///// (@Vampi090, ID: 661553358) вызвал команду: main_menu в 2025-04-17 10:35:55
+2025-04-17 10:35:55,280 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/answerCallbackQuery "HTTP/1.1 200 OK"
+2025-04-17 10:35:55,365 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/editMessageText "HTTP/1.1 200 OK"
+2025-04-17 10:35:56,383 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:35:56,390 - INFO - 📥 ///// ///// (@Vampi090, ID: 661553358) вызвал команду: sync_export в 2025-04-17 10:35:56
+2025-04-17 10:35:56,448 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/answerCallbackQuery "HTTP/1.1 200 OK"
+2025-04-17 10:35:56,519 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/editMessageText "HTTP/1.1 200 OK"
+2025-04-17 10:35:57,800 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:35:57,806 - INFO - 📥 ///// ///// (@Vampi090, ID: 661553358) вызвал команду: main_menu в 2025-04-17 10:35:57
+2025-04-17 10:35:57,860 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/answerCallbackQuery "HTTP/1.1 200 OK"
+2025-04-17 10:35:57,940 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/editMessageText "HTTP/1.1 200 OK"
+2025-04-17 10:35:58,582 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:35:58,588 - INFO - 📥 ///// ///// (@Vampi090, ID: 661553358) вызвал команду: debt в 2025-04-17 10:35:58
+2025-04-17 10:35:58,643 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/answerCallbackQuery "HTTP/1.1 200 OK"
+2025-04-17 10:35:58,739 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/editMessageText "HTTP/1.1 200 OK"
+2025-04-17 10:35:59,625 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:35:59,631 - INFO - 📥 ///// ///// (@Vampi090, ID: 661553358) вызвал команду: main_menu в 2025-04-17 10:35:59
+2025-04-17 10:35:59,685 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/answerCallbackQuery "HTTP/1.1 200 OK"
+2025-04-17 10:35:59,758 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/editMessageText "HTTP/1.1 200 OK"
+2025-04-17 10:36:00,394 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:36:00,399 - INFO - 📥 ///// ///// (@Vampi090, ID: 661553358) вызвал команду: help_section в 2025-04-17 10:36:00
+2025-04-17 10:36:00,456 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/answerCallbackQuery "HTTP/1.1 200 OK"
+2025-04-17 10:36:00,539 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/editMessageText "HTTP/1.1 200 OK"
+2025-04-17 10:36:01,571 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:36:01,576 - INFO - 📥 ///// ///// (@Vampi090, ID: 661553358) вызвал команду: main_menu в 2025-04-17 10:36:01
+2025-04-17 10:36:01,704 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/answerCallbackQuery "HTTP/1.1 200 OK"
+2025-04-17 10:36:01,863 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/editMessageText "HTTP/1.1 200 OK"
+2025-04-17 10:36:11,623 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:36:16,734 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:36:16,743 - INFO - 📥 ///// ///// (@Vampi090, ID: 661553358) вызвал команду: help_section в 2025-04-17 10:36:16
+2025-04-17 10:36:16,901 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/answerCallbackQuery "HTTP/1.1 200 OK"
+2025-04-17 10:36:16,997 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/editMessageText "HTTP/1.1 200 OK"
+2025-04-17 10:36:17,991 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:36:17,996 - INFO - 📥 ///// ///// (@Vampi090, ID: 661553358) вызвал команду: main_menu в 2025-04-17 10:36:17
+2025-04-17 10:36:18,063 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/answerCallbackQuery "HTTP/1.1 200 OK"
+2025-04-17 10:36:18,157 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/editMessageText "HTTP/1.1 200 OK"
+2025-04-17 10:36:23,293 - INFO - HTTP Request: POST https://api.telegram.org/bot7888156941:AAGeuOWwEYSZwjOv1aY5eKUcPMxJlTPANuk/getUpdates "HTTP/1.1 200 OK"
+2025-04-17 10:36:23,293 - INFO - Application is stopping. This might take a moment.
+2025-04-17 10:36:23,294 - INFO - Scheduler has been shut down
+2025-04-17 10:36:23,319 - INFO - Application.stop() complete

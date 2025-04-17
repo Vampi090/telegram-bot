@@ -1542,55 +1542,138 @@ async def main_menu_button_handler(update: Update, context: CallbackContext):
 
     data = query.data
 
-    # Управление транзакциями
-    if data == 'add':
+    # 🔹 Переход в подменю
+    if data == 'transactions':
+        await query.edit_message_text("📥 Меню транзакцій:", reply_markup=transaction_menu_keyboard())
+    elif data == 'analytics':
+        await query.edit_message_text("📊 Аналітика та звіти:", reply_markup=analytics_menu_keyboard())
+    elif data == 'budgeting':
+        await query.edit_message_text("🎯 Цілі та бюджет:", reply_markup=budget_menu_keyboard())
+    elif data == 'tools':
+        await query.edit_message_text("💼 Фінансові інструменти:", reply_markup=tools_menu_keyboard())
+    elif data == 'sync_export':
+        await query.edit_message_text("🔄 Синхронізація та експорт:", reply_markup=sync_menu_keyboard())
+    elif data == 'help_section':
+        await query.edit_message_text("❓ Допомога:", reply_markup=help_menu_keyboard())
+
+    # 🔹 Управление транзакциями
+    elif data == 'add':
         await add_transaction(update, context)
     elif data == 'history':
         await history(update, context)
+    elif data == 'undo':
+        await undo(update, context)  # не забудь реализовать эту функцию
     elif data == 'stats':
         await stats(update, context)
 
-    # Цели и бюджет
+    # 🔹 Цели и бюджет
     elif data == 'budget':
         await budget(update, context)
     elif data == 'goal':
         await goal(update, context)
 
-    # Графики и статистика
+    # 🔹 Графики и статистика
     elif data == 'chart':
         await show_chart(update, context)
-    elif data == 'convert':
-        await convert(update, context)
-    elif data == 'export':
-        await export_data(update, context)
-
-    # Синхронизация и экспорт
-    elif data == 'sync':
-        await sync(update, context)
-
-    # Напоминания
-    elif data == 'reminder':
-        await set_reminder(update, context)
-
-    # Сводка
     elif data == 'report':
         await track_goals(update, context)
 
-    # Обсуждение долгов
+    # 🔹 Финансовые инструменты
+    elif data == 'convert':
+        await convert(update, context)
+
+    # 🔹 Синхронизация и экспорт
+    elif data == 'sync':
+        await sync(update, context)
+    elif data == 'export':
+        await export_data(update, context)
+
+    # 🔹 Напоминания
+    elif data == 'reminder':
+        await set_reminder(update, context)
+
+    # 🔹 Учёт долгов
     elif data == 'debt':
         await debt(update, context)
 
-    # Помощь
+    # 🔹 Помощь
     elif data == 'help':
         await help_command(update, context)
+    elif data == 'guide':
+        await query.edit_message_text("📖 Мінi-гайд:\n\n1. Додайте транзакцію через ➕\n2. Перегляньте статистику\n3. Встановіть бюджет або ціль\n\nПочніть з головного меню: /start", reply_markup=help_menu_keyboard())
 
-    # Возврат в главное меню
+    # 🔹 Возврат в главное меню
     elif data == 'main_menu':
         await query.edit_message_text("🏠 Головне меню:", reply_markup=main_menu_keyboard())
 
-    # Обработка ошибок
+    # ❌ Обработка ошибок
     else:
         await query.edit_message_text("❌ Невідома команда.", reply_markup=main_menu_keyboard())
+
+
+
+
+# Главное меню
+def main_menu_keyboard():
+    return InlineKeyboardMarkup([
+        [InlineKeyboardButton("📥 Транзакції", callback_data='transactions')],
+        [InlineKeyboardButton("📊 Аналітика та звіти", callback_data='analytics')],
+        [InlineKeyboardButton("🎯 Цілі та бюджет", callback_data='budgeting')],
+        [InlineKeyboardButton("💼 Фінансові інструменти", callback_data='tools')],
+        [InlineKeyboardButton("🔄 Синхронізація та експорт", callback_data='sync_export')],
+        [InlineKeyboardButton("🤝 Облік боргів", callback_data='debt')],
+        [InlineKeyboardButton("❓ Допомога", callback_data='help_section')],
+    ])
+
+# Подменю: Управление транзакциями
+def transaction_menu_keyboard():
+    return InlineKeyboardMarkup([
+        [InlineKeyboardButton("➕ Додати транзакцію", callback_data='add')],
+        [InlineKeyboardButton("📜 Історія", callback_data='history')],
+        [InlineKeyboardButton("↩️ Відміна транзакції", callback_data='undo')],
+        [InlineKeyboardButton("🔙 Назад", callback_data='main_menu')]
+    ])
+
+# Подменю: Аналитика и отчеты
+def analytics_menu_keyboard():
+    return InlineKeyboardMarkup([
+        [InlineKeyboardButton("📈 Статистика", callback_data='stats')],
+        [InlineKeyboardButton("📊 Графіки", callback_data='chart')],
+        [InlineKeyboardButton("📅 Звіт", callback_data='report')],
+        [InlineKeyboardButton("🔙 Назад", callback_data='main_menu')]
+    ])
+
+# Подменю: Цели и бюджет
+def budget_menu_keyboard():
+    return InlineKeyboardMarkup([
+        [InlineKeyboardButton("🎯 Цілі", callback_data='goal')],
+        [InlineKeyboardButton("💰 Бюджет", callback_data='budget')],
+        [InlineKeyboardButton("⏰ Нагадування", callback_data='reminder')],
+        [InlineKeyboardButton("🔙 Назад", callback_data='main_menu')]
+    ])
+
+# Подменю: Финансовые инструменты
+def tools_menu_keyboard():
+    return InlineKeyboardMarkup([
+        [InlineKeyboardButton("💱 Конвертація валют", callback_data='convert')],
+        [InlineKeyboardButton("🔙 Назад", callback_data='main_menu')]
+    ])
+
+# Подменю: Синхронизация и экспорт
+def sync_menu_keyboard():
+    return InlineKeyboardMarkup([
+        [InlineKeyboardButton("🔄 Синхронізація з Google Таблицями", callback_data='sync')],
+        [InlineKeyboardButton("📁 Експорт даних", callback_data='export')],
+        [InlineKeyboardButton("🔙 Назад", callback_data='main_menu')]
+    ])
+
+# Подменю: Помощь
+def help_menu_keyboard():
+    return InlineKeyboardMarkup([
+        [InlineKeyboardButton("📌 Команди", callback_data='help')],
+        [InlineKeyboardButton("📖 Гайд", callback_data='guide')],
+        [InlineKeyboardButton("🔙 Назад", callback_data='main_menu')]
+    ])
 
 
 
@@ -1621,7 +1704,6 @@ if __name__ == "__main__":
     app.add_handler(CommandHandler("adddebt", adddebt), group=0)
     app.add_handler(CallbackQueryHandler(start, pattern="^main_menu$"), group=0)
 
-
     # ConversationHandler для долгов
     DEBT_NAME, DEBT_AMOUNT = range(2)
     debt_conv_handler = ConversationHandler(
@@ -1640,6 +1722,7 @@ if __name__ == "__main__":
     )
     app.add_handler(debt_conv_handler, group=0)
 
+    # Общий conversation handler (например, для add_menu/convert/help)
     conv_handler = ConversationHandler(
         entry_points=[CallbackQueryHandler(simple_menu_button_handler, pattern="^(add_menu|convert|help)$")],
         states={
@@ -1652,20 +1735,23 @@ if __name__ == "__main__":
                 CallbackQueryHandler(debt_menu_button_handler)
             ],
         },
-        fallbacks=[
-            CallbackQueryHandler(start, pattern="^main_menu$"),
-        ]
+        fallbacks=[CallbackQueryHandler(start, pattern="^main_menu$")]
     )
     app.add_handler(conv_handler, group=0)
 
-
-    # Обработчики кнопок по категориям
-    app.add_handler(CallbackQueryHandler(main_menu_button_handler, pattern="^(add|history|stats|budget|goal|chart|convert|export|sync|reminder|report|debt|help)$"), group=0)
-    #app.add_handler(CallbackQueryHandler(simple_menu_button_handler, pattern="^(add_menu|convert|help)$"))
+    # Специфические обработчики кнопок
     app.add_handler(CallbackQueryHandler(debt_menu_button_handler, pattern="^(view_debts|debt_history|close_debt|remind_debt|help_debt|main_menu|add_debt|debt_back)$"), group=0)
+    app.add_handler(CallbackQueryHandler(main_menu_button_handler, pattern="^(add|history|stats|budget|goal|chart|convert|export|sync|reminder|report|debt|help)$"), group=0)
+    app.add_handler(CallbackQueryHandler(simple_menu_button_handler, pattern="^(add_menu|convert|help)$"), group=0)
+
+    # 🆕 Универсальный обработчик callback-кнопок (ставим последним!)
+    app.add_handler(CallbackQueryHandler(main_menu_button_handler), group=0)
+
+    # Планировщик задач
     job_queue = app.job_queue
     job_queue.run_daily(lambda context: context.job_queue.run_once(set_reminder, 0), time=time(9, 0))
 
+    # Закрытие меню бюджета, если нужно
     app.add_handler(MessageHandler(filters.ALL, close_budget_if_active), group=1)
 
     # Обработка ошибок
@@ -1676,6 +1762,7 @@ if __name__ == "__main__":
 
     print("Бот запущен!")
     app.run_polling()
+
 
 
 
