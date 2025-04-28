@@ -1,5 +1,5 @@
 import logging
-from services.database_service import create_command_logs_table
+from services.database_service import init_database
 from handlers import register_handlers
 from telegram.ext import Application
 from config import TOKEN  # Не забудьте создать файл config.py с вашим токеном
@@ -20,7 +20,7 @@ def main():
     logger.info("Запуск Telegram-бота...")
 
     # Создание таблиц в базе данных (если их еще нет)
-    create_command_logs_table()
+    init_database()
 
     # Регистрация обработчиков (handlers)
     register_handlers(app)
