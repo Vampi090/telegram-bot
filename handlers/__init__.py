@@ -35,12 +35,14 @@ from .debt import (
     debt_handler,
     debt_command_handler,
     debt_menu_handler,
+    debt_category_handler,
+    debt_action_handler,
     debt_message_handler,
     adddebt_handler,
     set_reminder_handler,
     add_debt_conv_handler
 )
-from .help import help_handler, help_section_handler, guide_handler, help_callback_handler
+from .help import help_section_handler, guide_handler
 
 def register_handlers(app):
     """
@@ -85,6 +87,8 @@ def register_handlers(app):
     app.add_handler(debt_handler)
     app.add_handler(debt_command_handler)
     app.add_handler(debt_menu_handler)
+    app.add_handler(debt_category_handler)  # Обработчик категорий долгов (я должен/мне должны)
+    app.add_handler(debt_action_handler)  # Обработчик действий с долгами (погашение, удаление)
     app.add_handler(adddebt_handler)
     app.add_handler(set_reminder_handler)
     app.add_handler(add_debt_conv_handler)
@@ -92,6 +96,4 @@ def register_handlers(app):
 
     # Помощь
     app.add_handler(help_section_handler)
-    app.add_handler(help_handler)
     app.add_handler(guide_handler)
-    app.add_handler(help_callback_handler)

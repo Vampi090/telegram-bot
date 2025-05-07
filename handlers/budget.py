@@ -158,7 +158,17 @@ async def handle_budget_callback(update: Update, context: CallbackContext):
             context.user_data['budget_message_id'] = msg.message_id
             return
 
+        # Calculate total budget
+        total_budget = sum(amount for _, amount in budgets)
+
         message_lines = ["📊 *Ваши бюджеты:*"]
+
+        # Add total budget section
+        message_lines.append("\n💼 *Общий бюджет:*")
+        message_lines.append(f"💰 `{total_budget} грн`")
+
+        # Add category budget section
+        message_lines.append("\n📋 *Бюджет по категориям:*")
         for category, amount in budgets:
             message_lines.append(f"💰 *{category}*: `{amount} грн`")
 
