@@ -1,31 +1,31 @@
 import logging
 from services.database_service import init_database
 from handlers import register_handlers
+from handlers.reminders import check_and_send_reminders
 from telegram.ext import Application
-from config import TOKEN  # Не забудьте создать файл config.py с вашим токеном
+from config import TOKEN
 
-# Настройка логирования
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     level=logging.INFO,
-    filename="bot.log"  # Логи будут сохраняться в файл bot.log
+    filename="bot.log"
 )
 logger = logging.getLogger(__name__)
 
-# Инициализация приложения
 app = Application.builder().token(TOKEN).build()
 
 
 def main():
     logger.info("Запуск Telegram-бота...")
 
-    # Создание таблиц в базе данных (если их еще нет)
     init_database()
 
-    # Регистрация обработчиков (handlers)
     register_handlers(app)
 
-    # Запуск бота
+    job_queue = app.job_queue
+    job_queue.run_repeating(check_and_send_reminders, interval=60, first=10)
+    logger.info("Планувальник нагадувань запущено")
+
     app.run_polling()
 
 

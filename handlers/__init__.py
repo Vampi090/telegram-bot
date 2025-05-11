@@ -22,7 +22,13 @@ from .budget import (
     budget_handler,
     goal_command_handler,
     budget_command_handler,
-    track_goals_handler
+    track_goals_handler,
+    piggy_bank_handler,
+    piggy_bank_view_handler,
+    piggy_bank_delete_handler,
+    piggy_bank_delete_confirm_handler,
+    piggy_bank_create_conversation,
+    piggy_bank_add_funds_conversation
 )
 from .tools import tools_handler
 from .financial_instruments import currency_conversion_handler
@@ -43,6 +49,19 @@ from .debt import (
     add_debt_conv_handler
 )
 from .help import help_section_handler, guide_handler
+from .reminders import (
+    reminder_handler,
+    list_reminders_handler,
+    view_reminder_handler,
+    edit_reminder_handler,
+    complete_reminder_handler,
+    delete_reminder_handler,
+    delete_reminder_confirm_handler,
+    create_reminder_conversation,
+    edit_reminder_title_conversation,
+    edit_reminder_datetime_conversation,
+    check_and_send_reminders
+)
 
 def register_handlers(app):
     """
@@ -74,6 +93,14 @@ def register_handlers(app):
     app.add_handler(budget_command_handler)
     app.add_handler(track_goals_handler)
 
+    # Копилка
+    app.add_handler(piggy_bank_handler)
+    app.add_handler(piggy_bank_view_handler)
+    app.add_handler(piggy_bank_delete_handler)
+    app.add_handler(piggy_bank_delete_confirm_handler)
+    app.add_handler(piggy_bank_create_conversation)
+    app.add_handler(piggy_bank_add_funds_conversation)
+
     # Финансовые инструменты
     app.add_handler(tools_handler)
     app.add_handler(currency_conversion_handler)
@@ -92,7 +119,21 @@ def register_handlers(app):
     app.add_handler(adddebt_handler)
     app.add_handler(set_reminder_handler)
     app.add_handler(add_debt_conv_handler)
-    app.add_handler(debt_message_handler)  # Должен быть последним, чтобы не перехватывать другие сообщения
+
+    # Напоминания
+    app.add_handler(reminder_handler)
+    app.add_handler(list_reminders_handler)
+    app.add_handler(view_reminder_handler)
+    app.add_handler(edit_reminder_handler)
+    app.add_handler(complete_reminder_handler)
+    app.add_handler(delete_reminder_handler)
+    app.add_handler(delete_reminder_confirm_handler)
+    app.add_handler(create_reminder_conversation)
+    app.add_handler(edit_reminder_title_conversation)
+    app.add_handler(edit_reminder_datetime_conversation)
+
+    # Должен быть последним, чтобы не перехватывать другие сообщения
+    app.add_handler(debt_message_handler)
 
     # Помощь
     app.add_handler(help_section_handler)

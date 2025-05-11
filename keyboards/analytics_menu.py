@@ -1,6 +1,5 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
-# Подменю: Аналитика и отчеты
 def analytics_menu_keyboard():
     return InlineKeyboardMarkup([
         [InlineKeyboardButton("📈 Статистика", callback_data='stats')],

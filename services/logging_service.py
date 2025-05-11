@@ -6,12 +6,11 @@ from services.database_service import create_command_logs_table, insert_command_
 
 logger = logging.getLogger(__name__)
 
-# Убедимся, что таблица логов существует
 create_command_logs_table()
 
 
 async def log_command_usage(update: Update, context: CallbackContext):
-    """Логирует использование команды и записывает событие в базу данных."""
+    """Логує використання команди та записує подію в базу даних."""
     user = update.effective_user
     if not user:
         return
@@ -31,8 +30,6 @@ async def log_command_usage(update: Update, context: CallbackContext):
     if not command:
         return
 
-    # Вставляем запись в базу данных через database_service
     insert_command_log(user_id, username, full_name, command, timestamp)
 
-    # Логируем в файл
-    logger.info(f"Команда {command} была вызвана пользователем {user_id} ({username})")
+    logger.info(f"Команда {command} була викликана користувачем {user_id} ({username})")

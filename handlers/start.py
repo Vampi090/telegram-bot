@@ -2,12 +2,10 @@ from telegram import Update
 from telegram.ext import CallbackContext, CommandHandler
 from keyboards.main_menu import main_menu_keyboard
 from services.logging_service import log_command_usage
+from utils.menu_utils import send_or_edit_menu
 
 
 async def start(update: Update, context: CallbackContext):
-    """
-    Обработчик команды /start – отправляет приветственное сообщение и подгружает главное меню.
-    """
     await log_command_usage(update, context)
     user = update.effective_user
 
@@ -25,12 +23,7 @@ async def start(update: Update, context: CallbackContext):
 
     reply_markup = main_menu_keyboard()
 
-    if update.callback_query:
-        await update.callback_query.answer()
-        await update.callback_query.edit_message_text(welcome_text, reply_markup=reply_markup)
-    elif update.message:
-        await update.message.reply_text(welcome_text, reply_markup=reply_markup)
+    await send_or_edit_menu(update, context, welcome_text, reply_markup)
 
 
-# Создаем обработчик для команды /start
 start_handler = CommandHandler("start", start)

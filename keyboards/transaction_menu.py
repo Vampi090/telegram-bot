@@ -1,6 +1,5 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
-# Подменю: Управление транзакциями
 def transaction_menu_keyboard():
     return InlineKeyboardMarkup([
         [InlineKeyboardButton("➕ Додати транзакцію", callback_data='add')],

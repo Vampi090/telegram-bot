@@ -3,19 +3,13 @@ from telegram.ext import CallbackContext, CallbackQueryHandler, ConversationHand
 import requests
 from services.logging_service import log_command_usage
 
-# Conversation states
 WAITING_FOR_AMOUNT = 1
 WAITING_FOR_FROM_CURRENCY = 2
 WAITING_FOR_TO_CURRENCY = 3
 
-async def handle_convert_callback(update: Update, context: CallbackContext):
-    """
-    Handler for the currency conversion button.
-    Starts the conversation for currency conversion.
-    """
-    await log_command_usage(update, context)
 
-    # Clear any previous conversation data
+async def handle_convert_callback(update: Update, context: CallbackContext):
+    await log_command_usage(update, context)
     context.user_data.clear()
 
     await update.callback_query.answer()
@@ -26,18 +20,14 @@ async def handle_convert_callback(update: Update, context: CallbackContext):
             [InlineKeyboardButton("🔙 Назад", callback_data="tools")]
         ])
     )
-
     return WAITING_FOR_AMOUNT
 
+
 async def handle_amount_input(update: Update, context: CallbackContext):
-    """
-    Handles the amount input for currency conversion.
-    """
     try:
         amount = float(update.message.text)
         context.user_data['amount'] = amount
 
-        # Ask for source currency
         await update.message.reply_text(
             f"Сума: {amount}\n"
             "Введіть вихідну валюту (наприклад, USD):",
@@ -48,7 +38,6 @@ async def handle_amount_input(update: Update, context: CallbackContext):
                 [InlineKeyboardButton("🔙 Назад", callback_data="convert")]
             ])
         )
-
         return WAITING_FOR_FROM_CURRENCY
 
     except ValueError:
@@ -60,20 +49,15 @@ async def handle_amount_input(update: Update, context: CallbackContext):
         )
         return WAITING_FOR_AMOUNT
 
+
 async def handle_from_currency_input(update: Update, context: CallbackContext):
-    """
-    Handles the source currency input for conversion.
-    """
     if update.callback_query:
-        # Handle button selection
         query = update.callback_query
         await query.answer()
 
-        # Extract currency from callback data (format: "from_USD")
         from_currency = query.data.split("_")[1]
         context.user_data['from_currency'] = from_currency
 
-        # Ask for target currency
         await query.edit_message_text(
             f"Сума: {context.user_data['amount']}\n"
             f"З: {from_currency}\n"
@@ -85,13 +69,10 @@ async def handle_from_currency_input(update: Update, context: CallbackContext):
                 [InlineKeyboardButton("🔙 Назад", callback_data="convert")]
             ])
         )
-
     else:
-        # Handle text input
         from_currency = update.message.text.upper()
         context.user_data['from_currency'] = from_currency
 
-        # Ask for target currency
         await update.message.reply_text(
             f"Сума: {context.user_data['amount']}\n"
             f"З: {from_currency}\n"
@@ -103,28 +84,20 @@ async def handle_from_currency_input(update: Update, context: CallbackContext):
                 [InlineKeyboardButton("🔙 Назад", callback_data="convert")]
             ])
         )
-
     return WAITING_FOR_TO_CURRENCY
 
+
 async def handle_to_currency_input(update: Update, context: CallbackContext):
-    """
-    Handles the target currency input and performs the conversion.
-    """
     if update.callback_query:
-        # Handle button selection
         query = update.callback_query
         await query.answer()
-
-        # Extract currency from callback data (format: "to_USD")
         to_currency = query.data.split("_")[1]
     else:
-        # Handle text input
         to_currency = update.message.text.upper()
 
     amount = context.user_data['amount']
     from_currency = context.user_data['from_currency']
 
-    # Get exchange rate and perform conversion
     rate = await get_exchange_rate(from_currency, to_currency)
 
     if rate is None:
@@ -133,7 +106,6 @@ async def handle_to_currency_input(update: Update, context: CallbackContext):
         converted_amount = round(amount * rate, 2)
         result_text = f"💱 {amount} {from_currency} ≈ {converted_amount} {to_currency}"
 
-    # Display result
     if update.callback_query:
         await update.callback_query.edit_message_text(
             result_text,
@@ -153,10 +125,8 @@ async def handle_to_currency_input(update: Update, context: CallbackContext):
 
     return ConversationHandler.END
 
+
 async def get_exchange_rate(from_currency, to_currency):
-    """
-    Gets the exchange rate between two currencies using exchangerate-api.
-    """
     url = f"https://api.exchangerate-api.com/v4/latest/{from_currency}"
 
     try:
@@ -181,10 +151,8 @@ async def get_exchange_rate(from_currency, to_currency):
 
     return None
 
+
 async def cancel_conversion(update: Update, context: CallbackContext):
-    """
-    Cancels the currency conversion process.
-    """
     await update.callback_query.answer()
     await update.callback_query.edit_message_text(
         "💱 Конвертація скасована.",
@@ -192,10 +160,9 @@ async def cancel_conversion(update: Update, context: CallbackContext):
             [InlineKeyboardButton("🔙 Назад до інструментів", callback_data="tools")]
         ])
     )
-
     return ConversationHandler.END
 
-# Create the conversation handler for currency conversion
+
 currency_conversion_handler = ConversationHandler(
     entry_points=[CallbackQueryHandler(handle_convert_callback, pattern="^convert$")],
     states={

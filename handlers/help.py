@@ -5,7 +5,6 @@ from services.logging_service import log_command_usage
 
 
 async def handle_help_callback(update: Update, context: CallbackContext):
-    """Обработчик для меню помощи"""
     await log_command_usage(update, context)
     user = update.effective_user
 
@@ -19,10 +18,7 @@ async def handle_help_callback(update: Update, context: CallbackContext):
         )
 
 
-
-
 async def handle_guide_callback(update: Update, context: CallbackContext):
-    """Обработчик для мини-гайда"""
     await log_command_usage(update, context)
 
     guide_text = """
@@ -72,6 +68,5 @@ async def handle_guide_callback(update: Update, context: CallbackContext):
         )
 
 
-# Регистрация обработчиков
 help_section_handler = CallbackQueryHandler(handle_help_callback, pattern='^help_section$')
 guide_handler = CallbackQueryHandler(handle_guide_callback, pattern='^guide$')

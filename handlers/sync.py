@@ -22,22 +22,19 @@ async def handle_sync_menu_callback(update: Update, context: CallbackContext):
 
 
 async def handle_sync_callback(update: Update, context: CallbackContext):
-    """Обработчик для синхронизации с Google Sheets"""
+    """Обробник для синхронізації з Google Sheets"""
     await log_command_usage(update, context)
 
     user_id = update.callback_query.from_user.id
     await update.callback_query.answer()
 
-    # Отправляем сообщение о начале синхронизации
     await update.callback_query.edit_message_text(
-        text="🔄 Синхронизация данных запущена...",
+        text="🔄 Синхронізація даних запущена...",
         reply_markup=None
     )
 
-    # Выполняем синхронизацию
     success, message = sync_with_google_sheets(user_id)
 
-    # Отправляем результат
     await context.bot.send_message(
         chat_id=user_id,
         text=message,
@@ -46,43 +43,38 @@ async def handle_sync_callback(update: Update, context: CallbackContext):
 
 
 async def handle_export_callback(update: Update, context: CallbackContext):
-    """Обработчик для экспорта данных в Excel"""
+    """Обробник для експорту даних в Excel"""
     await log_command_usage(update, context)
 
     user_id = update.callback_query.from_user.id
     await update.callback_query.answer()
 
-    # Экспортируем транзакции в Excel
     file_path = export_transactions_to_excel(user_id)
 
     if not file_path:
         await update.callback_query.edit_message_text(
-            text="❌ У вас нет данных для экспорта.",
+            text="❌ У вас немає даних для експорту.",
             reply_markup=sync_menu_keyboard()
         )
         return
 
-    # Отправляем Excel файл
     with open(file_path, "rb") as doc:
         await context.bot.send_document(
             chat_id=user_id,
             document=doc,
             filename=f"transactions_{user_id}.xlsx",
-            caption="📁 Ваши данные экспортированы в Excel с форматированием."
+            caption="📁 Ваші дані експортовані в Excel з форматуванням."
         )
 
-    # Удаляем временный файл
     os.remove(file_path)
 
-    # Отправляем сообщение с меню синхронизации
     await context.bot.send_message(
         chat_id=user_id,
-        text="📁 Экспорт данных в Excel завершен.",
+        text="📁 Експорт даних в Excel завершено.",
         reply_markup=sync_menu_keyboard()
     )
 
 
-# Регистрация обработчиков
 sync_menu_handler = CallbackQueryHandler(handle_sync_menu_callback, pattern='^sync_export')
 sync_handler = CallbackQueryHandler(handle_sync_callback, pattern='^sync$')
 export_callback_handler = CallbackQueryHandler(handle_export_callback, pattern='^export$')
