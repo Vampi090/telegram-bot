@@ -46,7 +46,9 @@ from .debt import (
     debt_message_handler,
     adddebt_handler,
     set_reminder_handler,
-    add_debt_conv_handler
+    add_debt_conv_handler,
+    debt_reminder_handler,
+    debt_reminder_conv_handler
 )
 from .help import help_section_handler, guide_handler
 from .reminders import (
@@ -116,6 +118,8 @@ def register_handlers(app):
     app.add_handler(debt_menu_handler)
     app.add_handler(debt_category_handler)  # Обработчик категорий долгов (я должен/мне должны)
     app.add_handler(debt_action_handler)  # Обработчик действий с долгами (погашение, удаление)
+    app.add_handler(debt_reminder_handler)  # Обработчик напоминаний о долгах
+    app.add_handler(debt_reminder_conv_handler)  # Обработчик выбора даты и времени для напоминаний о долгах
     app.add_handler(adddebt_handler)
     app.add_handler(set_reminder_handler)
     app.add_handler(add_debt_conv_handler)

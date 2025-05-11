@@ -194,6 +194,8 @@ def create_debts_table():
                        DEFAULT
                        'open',
                        due_date
+                       TEXT,
+                       creation_time
                        TEXT
                    )
                    """)
@@ -241,6 +243,96 @@ def init_database():
     create_reminders_table()
 
     migrate_budget_data()
+    migrate_debts_table()
+    migrate_reminders_table()
+
+
+def migrate_debts_table():
+    try:
+        conn = sqlite3.connect(DATABASE_FILE)
+        cursor = conn.cursor()
+
+        # Check if the debts table exists
+        cursor.execute("""
+                       SELECT name
+                       FROM sqlite_master
+                       WHERE type = 'table'
+                         AND name = 'debts'
+                       """)
+
+        if not cursor.fetchone():
+            conn.close()
+            return
+
+        # Check if the creation_time column exists in the debts table
+        cursor.execute("PRAGMA table_info(debts)")
+        columns = [column[1] for column in cursor.fetchall()]
+
+        if 'creation_time' not in columns:
+            print("Adding creation_time column to debts table")
+            cursor.execute("ALTER TABLE debts ADD COLUMN creation_time TEXT")
+
+            # Set a default value for existing records
+            cursor.execute("UPDATE debts SET creation_time = ? WHERE creation_time IS NULL", 
+                          (datetime.now().strftime('%Y-%m-%d %H:%M:%S'),))
+
+            conn.commit()
+            print("Migration of debts table completed successfully")
+
+        conn.close()
+    except Exception as e:
+        print(f"Error migrating debts table: {e}")
+        if 'conn' in locals():
+            conn.close()
+
+
+def migrate_reminders_table():
+    try:
+        conn = sqlite3.connect(DATABASE_FILE)
+        cursor = conn.cursor()
+
+        # Check if the reminders table exists
+        cursor.execute("""
+                       SELECT name
+                       FROM sqlite_master
+                       WHERE type = 'table'
+                         AND name = 'reminders'
+                       """)
+
+        if not cursor.fetchone():
+            print("Creating reminders table")
+            create_reminders_table()
+            conn.close()
+            return
+
+        # Check if all required columns exist in the reminders table
+        cursor.execute("PRAGMA table_info(reminders)")
+        columns = [column[1] for column in cursor.fetchall()]
+
+        required_columns = ['id', 'user_id', 'title', 'reminder_datetime', 'created_at', 'is_completed']
+        missing_columns = [col for col in required_columns if col not in columns]
+
+        if missing_columns:
+            print(f"Adding missing columns to reminders table: {missing_columns}")
+            for column in missing_columns:
+                if column == 'is_completed':
+                    cursor.execute(f"ALTER TABLE reminders ADD COLUMN {column} INTEGER DEFAULT 0")
+                elif column == 'created_at':
+                    cursor.execute(f"ALTER TABLE reminders ADD COLUMN {column} TEXT")
+                    # Set a default value for existing records
+                    cursor.execute("UPDATE reminders SET created_at = ? WHERE created_at IS NULL", 
+                                  (datetime.now().strftime('%Y-%m-%d %H:%M:%S'),))
+                else:
+                    cursor.execute(f"ALTER TABLE reminders ADD COLUMN {column} TEXT")
+
+            conn.commit()
+            print("Migration of reminders table completed successfully")
+
+        conn.close()
+    except Exception as e:
+        print(f"Error migrating reminders table: {e}")
+        if 'conn' in locals():
+            conn.close()
 
 
 def migrate_budget_data():
@@ -637,6 +729,14 @@ def check_database():
         columns = cursor.fetchall()
         print(f"Стовпці в таблиці debts: {columns}")
 
+        if 'reminders' not in tables:
+            print("Таблиця 'reminders' не існує, створюю її")
+            create_reminders_table()
+
+        cursor.execute("PRAGMA table_info(reminders)")
+        columns = cursor.fetchall()
+        print(f"Стовпці в таблиці reminders: {columns}")
+
         conn.close()
         return True
     except Exception as e:
@@ -644,7 +744,7 @@ def check_database():
         return False
 
 
-def save_debt(user_id, name, amount):
+def save_debt(user_id, name, amount, due_date=None):
     if not check_database():
         print("Перевірка бази даних не вдалася, неможливо зберегти борг")
         return False
@@ -662,10 +762,12 @@ def save_debt(user_id, name, amount):
             create_debts_table()
 
         query = """
-                INSERT INTO debts (user_id, debtor, amount, status, due_date)
-                VALUES (?, ?, ?, 'open', datetime('now')) \
+                INSERT INTO debts (user_id, debtor, amount, status, due_date, creation_time)
+                VALUES (?, ?, ?, 'open', ?, ?) \
                 """
-        params = (user_id, name, float(amount))
+        due_date_value = due_date if due_date else datetime.now().strftime('%Y-%m-%d')
+        creation_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        params = (user_id, name, float(amount), due_date_value, creation_time)
 
         print(f"Виконання запиту: {query}")
         print(f"З параметрами: {params}")
@@ -693,7 +795,7 @@ def get_active_debts(user_id):
         conn = sqlite3.connect(DATABASE_FILE)
         cursor = conn.cursor()
         cursor.execute("""
-                       SELECT debtor, amount
+                       SELECT debtor, amount, due_date, creation_time
                        FROM debts
                        WHERE user_id = ?
                          AND status = 'open'
@@ -712,7 +814,7 @@ def get_debt_history(user_id):
         conn = sqlite3.connect(DATABASE_FILE)
         cursor = conn.cursor()
         cursor.execute("""
-                       SELECT debtor, amount, status, due_date
+                       SELECT debtor, amount, status, due_date, creation_time
                        FROM debts
                        WHERE user_id = ?
                        ORDER BY due_date DESC
@@ -941,10 +1043,18 @@ def get_piggy_bank_goal(user_id, goal_id):
 
 
 def add_reminder(user_id, title, reminder_datetime):
+    if not check_database():
+        print("Перевірка бази даних не вдалася, неможливо додати нагадування")
+        return None
+
     try:
         conn = sqlite3.connect(DATABASE_FILE)
         cursor = conn.cursor()
         created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='reminders'")
+        if not cursor.fetchone():
+            create_reminders_table()
 
         cursor.execute("""
                        INSERT INTO reminders (user_id, title, reminder_datetime, created_at, is_completed)
@@ -953,6 +1063,7 @@ def add_reminder(user_id, title, reminder_datetime):
 
         reminder_id = cursor.lastrowid
         conn.commit()
+        print(f"Додано нагадування з ID: {reminder_id}")
         return reminder_id
     except Exception as e:
         print(f"Помилка додавання нагадування: {e}")
@@ -1049,9 +1160,20 @@ def update_reminder(user_id, reminder_id, title=None, reminder_datetime=None):
 
 
 def mark_reminder_completed(user_id, reminder_id):
+    if not check_database():
+        print("Перевірка бази даних не вдалася, неможливо позначити нагадування як виконане")
+        return False
+
     try:
         conn = sqlite3.connect(DATABASE_FILE)
         cursor = conn.cursor()
+
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='reminders'")
+        if not cursor.fetchone():
+            print("Таблиця 'reminders' не існує, створюю її")
+            create_reminders_table()
+            conn.close()
+            return False
 
         cursor.execute("""
                        UPDATE reminders
@@ -1061,7 +1183,9 @@ def mark_reminder_completed(user_id, reminder_id):
                        """, (reminder_id, user_id))
 
         conn.commit()
-        return cursor.rowcount > 0
+        rows_affected = cursor.rowcount
+        print(f"Позначено {rows_affected} нагадувань як виконані")
+        return rows_affected > 0
     except Exception as e:
         print(f"Помилка позначення нагадування як виконаного: {e}")
         return False
@@ -1091,11 +1215,23 @@ def delete_reminder(user_id, reminder_id):
 
 
 def get_due_reminders():
+    if not check_database():
+        print("Перевірка бази даних не вдалася, неможливо отримати нагадування")
+        return []
+
     try:
         conn = sqlite3.connect(DATABASE_FILE)
         cursor = conn.cursor()
 
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='reminders'")
+        if not cursor.fetchone():
+            print("Таблиця 'reminders' не існує, створюю її")
+            create_reminders_table()
+            conn.close()
+            return []
+
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(f"Поточний час: {current_time}")
 
         cursor.execute("""
                        SELECT id, user_id, title, reminder_datetime
@@ -1105,9 +1241,12 @@ def get_due_reminders():
                        """, (current_time,))
 
         reminders = cursor.fetchall()
+        print(f"Знайдено {len(reminders)} нагадувань для відправки")
+        for reminder in reminders:
+            print(f"Нагадування: {reminder}")
         return reminders
     except Exception as e:
-        print(f"Error getting due reminders: {e}")
+        print(f"Помилка отримання нагадувань: {e}")
         return []
     finally:
         conn.close()
